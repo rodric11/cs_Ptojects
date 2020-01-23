@@ -1,0 +1,55 @@
+﻿<Window x:Class="DictationaryParser.PartOfSpeechChange"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DictationaryParser"
+        mc:Ignorable="d"
+        Title="PartOfSpeechChange" Height="450" Width="471.565">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+            
+        </Grid.ColumnDefinitions>
+        <CheckBox Name="NOUN" Content="Имя сущ." Grid.Row="0" Grid.Column="0"  FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="ADJF" Content="Имя прил.(полное)" Grid.Row="1" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="ADJS" Content="Имя прил.(краткое)" Grid.Row="2" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="COMP" Content="Компоратив" Grid.Row="3" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="VERB" Content="Глагол" Grid.Row="4" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="INFN" Content="Инфинитив" Grid.Row="5" Grid.Column="0"  FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PRTF" Content="Причастие (полное)" Grid.Row="6" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PRTS" Content="Причастие (краткое)" Grid.Row="7" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="GRND" Content="Деепричастие" Grid.Row="8" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        
+        <CheckBox Name="NUMR" Content="Числительное" Grid.Row="0" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="ADVB" Content="Числительное" Grid.Row="1" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="NPRD" Content="Числительное" Grid.Row="2" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PRED" Content="Числительное" Grid.Row="3" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PREP" Content="Числительное" Grid.Row="4" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="CONJ" Content="Числительное" Grid.Row="5" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PRCL" Content="Числительное" Grid.Row="6" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="INTJ" Content="Числительное" Grid.Row="7" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+
+        <Grid Grid.Row="9" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+                <ColumnDefinition ></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Name ="ConfirmTypesButton" Content="Подтвердить" Grid.Column="1" Margin=" 8 8" Click="ConfirmTypesButton_Click"></Button>
+        </Grid>
+    </Grid>
+</Window>
