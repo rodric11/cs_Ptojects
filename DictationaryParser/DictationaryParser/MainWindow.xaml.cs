@@ -64,7 +64,7 @@ namespace DictationaryParser
 
         private void ParseDictationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DictStrings != null)
+            if (DictStrings != null || DictationRichBox.Document != null)
             {
                 //Thread thread = new Thread(new ThreadStart(GetOpcorporaWords));
                 
