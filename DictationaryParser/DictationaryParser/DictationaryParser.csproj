@@ -59,7 +59,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="Expectation.xaml">
+    <Page Include="AdditionalWindows\ExcelCreatorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AdditionalWindows\Expectation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,11 +71,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="AdditionalWindows\ExcelCreatorWindow.xaml.cs">
+      <DependentUpon>ExcelCreatorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Expectation.xaml.cs">
+    <Compile Include="AdditionalWindows\Expectation.xaml.cs">
       <DependentUpon>Expectation.xaml</DependentUpon>
     </Compile>
     <Compile Include="Logic\DictationParser.cs" />
@@ -79,7 +86,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="PartOfSpeechChange.xaml">
+    <Page Include="AdditionalWindows\PartOfSpeechChange.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -87,7 +94,7 @@
   <ItemGroup>
     <Compile Include="ParseEntities\OpcorporaWord.cs" />
     <Compile Include="ParseEntities\PartOfSpeech.cs" />
-    <Compile Include="PartOfSpeechChange.xaml.cs">
+    <Compile Include="AdditionalWindows\PartOfSpeechChange.xaml.cs">
       <DependentUpon>PartOfSpeechChange.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

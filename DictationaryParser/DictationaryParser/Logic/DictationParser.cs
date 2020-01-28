@@ -41,14 +41,6 @@ namespace DictationaryParser
         public static void GetOpcorporaWords()
         {
 
-
-            //idleWIndow.WindowStyle = WindowStyle.None;
-            //idleWIndow.ExpectationLabel.Content = ;
-
-            //ShowWindow("Выолняется подключение Opcorpora...");
-
-            //string xmlFileName = "\\dict.opcorpora.xml";
-
             string xmlFolderName = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Documentation\\dict.opcorpora.xml";
 
             XmlDocument xDoc = new XmlDocument();
@@ -63,7 +55,9 @@ namespace DictationaryParser
 
             XmlNodeList lemmaLvl = lemmata.SelectNodes("lemma");  // Уровень lemma
 
-            OpcorporaWords = new List<OpcorporaWord>();
+           
+                OpcorporaWords = new List<OpcorporaWord>();
+           
 
             foreach (XmlNode xmlNode in lemmaLvl)
             {
@@ -166,61 +160,61 @@ namespace DictationaryParser
                         newWord.Lexeme = sWord;
                         newWord.PartOfSpeech = oWord.PartOfSpeech;
 
-                        if (newWord.Lexeme.Length > 2)
+                        if (words.Exists(x => x.Lexeme == oWord.Lexeme) == false)
                         {
-                            words.Add(newWord);
+                            if (newWord.Lexeme.Length > 2)
+                            {
+                                words.Add(newWord);
+                            }
                         }
-                        
                     }
                     else
-                    {
+                    { // Ошибка в этом обработчике!!!
                         foreach (var aWord in oWord.AditionalWords)
                         {
                             if (aWord == sWord)
                             {
-                                OpcorporaWord newWord = new OpcorporaWord();
-
-                                newWord.Lexeme = sWord;
-                                newWord.PartOfSpeech = oWord.PartOfSpeech;
-
-                                if (words.Any(x => x.Lexeme == sWord) == false)
+                                if (words.Exists(x => x.Lexeme == oWord.Lexeme) == false)
                                 {
-                                    if (newWord.Lexeme.Length > 2)
+                                    if (oWord.Lexeme.Length > 2)
                                     {
+                                        OpcorporaWord newWord = new OpcorporaWord();
+                                        newWord.Lexeme = oWord.Lexeme;
+                                        newWord.PartOfSpeech = oWord.PartOfSpeech;
+
                                         words.Add(newWord);
                                     }
-                                    
+
                                 }
 
                             }
                         }
                     }
 
-                    // System.Console.WriteLine($"Обработано - {counter}, Найдено совпадений - {words.Count}");
                 }
             }
 
             return words;
         }
 
-        public static void AddNewWordsToExcel(List<OpcorporaWord> words)
+        public static int AddNewWordsToExcel(List<OpcorporaWord> words, string file)
         {
+            int counter = 0;
+
             Excel.Application objExcel = new Excel.Application();
 
             System.Diagnostics.Process[] excel = System.Diagnostics.Process.GetProcessesByName("excel");
 
-            //string fileName = "\\Words.xlsx";
-            string folder = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\DictationaryParser\\Documentation\\Words.xlsx";
-            //string fullFileName = folder + fileName;
+            //string file = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\DictationaryParser\\Documentation\\Words.xlsx";
 
-            Excel.Workbook objWorkBook = objExcel.Workbooks.Open(folder, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+            Excel.Workbook objWorkBook = objExcel.Workbooks.Open(file, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                 System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                 System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
                 System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value);
 
             // TODO: Добавить возможность изменения в разных таблицах.
-            Excel.Worksheet objWorkSheet = (Excel.Worksheet)objWorkBook.Worksheets["First"];
-
+            Excel.Worksheet objWorkSheet = (Excel.Worksheet)objWorkBook.Worksheets[1];
+            
             int lastrow = objWorkSheet.Cells[objWorkSheet.Rows.Count, "A"].End[Excel.XlDirection.xlUp].Row + 1;
 
             try
@@ -245,6 +239,7 @@ namespace DictationaryParser
                                 objWorkSheet.Cells[lastrow, "B"].Value = (dynamic)word.PartOfSpeech;
 
                                 lastrow++;
+                                counter++;
                             }
 
                         }
@@ -260,11 +255,13 @@ namespace DictationaryParser
                         objWorkSheet.Cells[lastrow, "B"].Value = (dynamic)word.PartOfSpeech;
 
                         lastrow++;
+                        counter++;
                     }
                 }
 
                 objWorkBook.Application.DisplayAlerts = false;
-                objWorkBook.Close(true, folder, System.Reflection.Missing.Value);
+                objWorkBook.Close(true, file, System.Reflection.Missing.Value);
+                
                 objExcel.Quit();
 
             }
@@ -282,6 +279,57 @@ namespace DictationaryParser
             }
 
             // Закрываем процессы Excel
+            foreach (var proc in excel)
+            {
+                if (string.IsNullOrEmpty(proc.MainWindowTitle))
+                {
+                    proc.Kill();
+                }
+            }
+
+            return counter;
+        }
+
+        public static void CreateNewExcelFile(string sheetName, string bookName)
+        {
+            Excel.Application objExcel = new Excel.Application();
+            System.Diagnostics.Process[] excel = System.Diagnostics.Process.GetProcessesByName("excel");
+
+            try
+            {
+                string directory = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\DictationaryParser\\Documentation\\" + Path.GetFileName(bookName);
+                Excel.Workbook objWorkBook = objExcel.Workbooks.Add(System.Reflection.Missing.Value);
+
+                var newSheet = (Excel.Worksheet)objWorkBook.Sheets.Add(objWorkBook.ActiveSheet);
+                
+                newSheet.Name = sheetName;
+
+                newSheet.Cells[1, "A"].Value = (dynamic)"Lexeme";
+                newSheet.Cells[1, "B"].Value = (dynamic)"PartOfSpeech";
+
+                objWorkBook.SaveAs(directory, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                    System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                    System.Reflection.Missing.Value, Excel.XlSaveAsAccessMode.xlExclusive,
+                    System.Reflection.Missing.Value, System.Reflection.Missing.Value, System.Reflection.Missing.Value,
+                    System.Reflection.Missing.Value, System.Reflection.Missing.Value);
+
+                objWorkBook.Sheets[2].Delete();
+                objWorkBook.Save();
+            }
+            catch (Exception e)
+            {
+
+                foreach (var proc in excel)
+                {
+                    if (string.IsNullOrEmpty(proc.MainWindowTitle))
+                    {
+                        proc.Kill();
+                    }
+                }
+
+                MessageBox.Show(e.Message);
+            }
+
             foreach (var proc in excel)
             {
                 if (string.IsNullOrEmpty(proc.MainWindowTitle))

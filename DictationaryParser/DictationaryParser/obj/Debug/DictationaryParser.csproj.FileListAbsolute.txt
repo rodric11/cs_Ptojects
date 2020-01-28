@@ -12,8 +12,10 @@ N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.csproj.GenerateResource.cache
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.exe
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.pdb
-N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\Expectation.g.cs
-N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\PartOfSpeechChange.g.cs
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\App.baml
-N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\Expectation.baml
-N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\PartOfSpeechChange.baml
+N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\ExcelCreatorWindow.g.cs
+N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\Expectation.g.cs
+N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\PartOfSpeechChange.g.cs
+N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\ExcelCreatorWindow.baml
+N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\Expectation.baml
+N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\PartOfSpeechChange.baml

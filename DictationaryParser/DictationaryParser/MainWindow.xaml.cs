@@ -1,9 +1,13 @@
-﻿using Microsoft.Win32;
+﻿using DictationaryParser.AdditionalWindows;
+using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
+using System.Windows.Media;
 using static DictationaryParser.DictationParser;
 
 namespace DictationaryParser
@@ -15,11 +19,24 @@ namespace DictationaryParser
     {
         public static Expectation idleWIndow = new Expectation();
 
-        public static List<string> activeTypes = new List<string>();
+        public static List<string> activeTypes;
+        private static List<OpcorporaWord> PreparedForExcelAddingList { get; set; }
+
+        private PartOfSpeechChange partOfSpeechChange = new PartOfSpeechChange();
         public List<string> DictStrings { get; set; }
+
+        public List<string> wordslist;
+
+        public static string currentFile = "N:\\C#\\CBS\\Projects etc\\DictationaryParser\\DictationaryParser\\DictationaryParser\\Documentation\\Words.xlsx";
+        public static string currentSheet = "";
+
+
         public MainWindow()
         {
             InitializeComponent();
+            LoadDictationButton.IsEnabled = false;
+            ParseDictationButton.IsEnabled = false;
+            WriteWordsToExcelButton.IsEnabled = false;
         }
 
         private void WordsFromDictationRichBox_Loaded(object sender, RoutedEventArgs e)
@@ -36,64 +53,65 @@ namespace DictationaryParser
 
         private void LoadDictationButton_Click(object sender, RoutedEventArgs e)
         {
-            activeTypes = new List<string>();
-
-            ActivatedTypesCHeck();
+            
 
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
 
             fileDialog.ShowDialog();
 
-            DictStrings = DictationParser.GetStrings(fileDialog.FileName);
-
-            FlowDocument flowDocument = new FlowDocument();
-            Paragraph paragraph = new Paragraph();
-
-            foreach (var textString in DictStrings)
+            if (fileDialog.FileName != "")
             {
-                paragraph.Inlines.Add(textString);
-                flowDocument.Blocks.Add(paragraph);
-                paragraph.Inlines.Add("\n");
-                flowDocument.Blocks.Add(paragraph);
-            }
 
-            DictationRichBox.Document = flowDocument;
+                DictStrings = DictationParser.GetStrings(fileDialog.FileName);
+
+            
+                FlowDocument flowDocument = new FlowDocument();
+                Paragraph paragraph = new Paragraph();
+
+                foreach (var textString in DictStrings)
+                {
+                    paragraph.Inlines.Add(textString);
+                    flowDocument.Blocks.Add(paragraph);
+                    paragraph.Inlines.Add("\n");
+                    flowDocument.Blocks.Add(paragraph);
+                }
+
+                DictationRichBox.Document = flowDocument;
+            }
+            
 
         }
 
         private void ParseDictationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (DictStrings != null || DictationRichBox.Document != null)
+            activeTypes = new List<string>();
+
+            ActivatedTypesCHeck();
+
+            if (DictStrings != null && DictationRichBox.Document != null)
             {
-                //Thread thread = new Thread(new ThreadStart(GetOpcorporaWords));
-                
-                idleWIndow.WindowStyle = WindowStyle.None;
-                idleWIndow.ExpectationLabel.Content = "Выолняется подключение Opcorpora...";
-                idleWIndow.ExpectationLabel.Visibility = Visibility.Visible;
-                //thread.Start();
-                BarLabel.Content = "Выолняется подключение Opcorpora...";
-                //while (DictationParser.OpcorporaWords == null)
-                //{
-                //    //idlewindow.show();
-                //    //idlewindow.showactivated = true;
-                //    //idlewindow.activate();
-                //    Thread.Sleep(1000);
-                //    //idlewindow.hide();
-                //}
-                
-                //Thread.Sleep(1000);
-                GetOpcorporaWords();
+                TypesChengeButton.IsEnabled = false;
+                LoadDictationButton.IsEnabled = false;
+                ParseDictationButton.IsEnabled = false;
+                WriteWordsToExcelButton.IsEnabled = false;
 
-                BarLabel.Content = "Выолняется обработка диктанта...";
+                //
                 
+                Thread thread = new Thread(new ThreadStart(FindExistingWordsInOpcorpora));
+                thread.Name = "ProcessingThread";
+                thread.Start();
+
+                MessageBox.Show("Выполняется обработка слов, подождте...", "IDLE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                BarLabel.Foreground = Brushes.Red;
+                BarLabel.Content = "Идет обработка...";
+
                 
-
-                List<string> wordslist = GetWordsFromDictationary(DictStrings);
-
-                BarLabel.Content = "Выолняется сопоставление слов из диктанта c Opcorpora...";
-                AddNewWordsToExcel(MatchWordsFromOpcorporaAndDictationary(wordslist));
-                //idleWIndow.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Нет данных для преобразования!");
             }
         }
 
@@ -111,9 +129,110 @@ namespace DictationaryParser
 
         private void TypesChengeButton_Click(object sender, RoutedEventArgs e)
         {
-            PartOfSpeechChange partOfSpeechChange = new PartOfSpeechChange();
+            
 
-            partOfSpeechChange.Show();
+            partOfSpeechChange.ShowDialog();
+
+            LoadDictationButton.IsEnabled = true;
+            ParseDictationButton.IsEnabled = true;
         }
+
+        private void WriteWordsToExcelButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentFile != "" && currentFile.EndsWith(".xlsx"))
+            {
+                TypesChengeButton.IsEnabled = false;
+                LoadDictationButton.IsEnabled = false;
+                ParseDictationButton.IsEnabled = false;
+                WriteWordsToExcelButton.IsEnabled = false;
+
+                Thread thread = new Thread(new ThreadStart(WriteToExcel));
+                thread.Name = "ProcessingThread";
+                thread.Start();
+
+                BarLabel.Foreground = Brushes.Red;
+                BarLabel.Content = $"Идет запись в Excel...";
+            }
+            
+
+        }
+
+        private void FindExistingWordsInOpcorpora()
+        {
+            GetOpcorporaWords();
+
+            wordslist = GetWordsFromDictationary(DictStrings);
+
+            PreparedForExcelAddingList = MatchWordsFromOpcorporaAndDictationary(wordslist);
+
+            Dispatcher.InvokeAsync(() =>
+            {
+                TypesChengeButton.IsEnabled = true;
+                LoadDictationButton.IsEnabled = true;
+                ParseDictationButton.IsEnabled = true;
+                WriteWordsToExcelButton.IsEnabled = true;
+
+                BarLabel.Foreground = Brushes.Green;
+                BarLabel.Content = $"Слов найдено: {PreparedForExcelAddingList.Count}";
+
+                MessageBox.Show($"Обработка слов закончена. Найдено: {PreparedForExcelAddingList.Count}.\n Для записи в Excel нажмите \"Записать слова\".", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            });
+
+        }
+
+        private void WriteToExcel()
+        {
+            int counter = AddNewWordsToExcel(PreparedForExcelAddingList, currentFile);
+
+            Dispatcher.InvokeAsync(() =>
+            {
+                TypesChengeButton.IsEnabled = true;
+                LoadDictationButton.IsEnabled = true;
+                ParseDictationButton.IsEnabled = true;
+                WriteWordsToExcelButton.IsEnabled = true;
+
+                BarLabel.Foreground = Brushes.Green;
+                BarLabel.Content = $"Успешная запись...";
+                
+                MessageBox.Show($"Запись в Excel закончена успешно. Записано: {counter}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            });
+        }
+
+        private void AddNewExcelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ExcelCreatorWindow excelCreatorWindow = new ExcelCreatorWindow();
+            excelCreatorWindow.ShowDialog();
+
+            if (currentFile != "" && currentSheet != "")
+            {
+                CreateNewExcelFile(currentSheet, currentFile);
+            }
+
+            IsLoadedFileLabel.Foreground = Brushes.Green;
+            IsLoadedFileLabel.Content = currentFile;
+
+        }
+
+        private void UseOldExcelButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+
+            fileDialog.ShowDialog();
+
+            if (fileDialog.FileName != "")
+            {
+                currentFile = fileDialog.FileName;
+            }
+            
+            IsLoadedFileLabel.Foreground = Brushes.Green;
+            IsLoadedFileLabel.Content = Path.GetFileName(currentFile);
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
     }
 }

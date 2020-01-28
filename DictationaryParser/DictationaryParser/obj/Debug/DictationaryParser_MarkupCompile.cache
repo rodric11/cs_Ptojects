@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\App.xaml
-3-507571171
+4-2045053108
 
-10-379775025
+11812326215
 14859699772
-Expectation.xaml;MainWindow.xaml;PartOfSpeechChange.xaml;
+AdditionalWindows\ExcelCreatorWindow.xaml;AdditionalWindows\Expectation.xaml;MainWindow.xaml;AdditionalWindows\PartOfSpeechChange.xaml;
 
 False
 
