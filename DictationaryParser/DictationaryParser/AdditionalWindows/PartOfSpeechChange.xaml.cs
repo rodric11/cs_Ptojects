@@ -38,7 +38,7 @@ namespace DictationaryParser
 
                 checkBoxes.Add(NUMR);
                 checkBoxes.Add(ADVB);
-                checkBoxes.Add(NPRD);
+                checkBoxes.Add(NPRO);
                 checkBoxes.Add(PRED);
                 checkBoxes.Add(PREP);
                 checkBoxes.Add(CONJ);
@@ -328,15 +328,15 @@ namespace DictationaryParser
                 ADVB.IsChecked = false;
             }
 
-            if (NPRD.IsChecked == true)
+            if (NPRO.IsChecked == true)
             {
                 checkBoxes[11].IsChecked = true;
-                NPRD.IsChecked = true;
+                NPRO.IsChecked = true;
             }
             else
             {
                 checkBoxes[11].IsChecked = false;
-                NPRD.IsChecked = false;
+                NPRO.IsChecked = false;
             }
 
             if (PRED.IsChecked == true)

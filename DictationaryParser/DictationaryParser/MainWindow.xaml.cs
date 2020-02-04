@@ -208,6 +208,8 @@ namespace DictationaryParser
                 CreateNewExcelFile(currentSheet, currentFile);
             }
 
+            currentFile = Path.GetFileName(currentFile);
+
             IsLoadedFileLabel.Foreground = Brushes.Green;
             IsLoadedFileLabel.Content = currentFile;
 

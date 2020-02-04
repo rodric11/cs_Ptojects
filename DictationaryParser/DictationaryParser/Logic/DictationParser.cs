@@ -1,13 +1,11 @@
-﻿using DictationaryParser.ParseEntities;
+﻿
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
 using System.Windows;
-using System.Windows.Controls;
 using System.Xml;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -40,6 +38,8 @@ namespace DictationaryParser
 
         public static void GetOpcorporaWords()
         {
+            bool previousWasVerb = false;
+            string previousVerbLexeme = "";
 
             string xmlFolderName = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Documentation\\dict.opcorpora.xml";
 
@@ -55,15 +55,14 @@ namespace DictationaryParser
 
             XmlNodeList lemmaLvl = lemmata.SelectNodes("lemma");  // Уровень lemma
 
-           
-                OpcorporaWords = new List<OpcorporaWord>();
-           
+            OpcorporaWords = new List<OpcorporaWord>();
+
 
             foreach (XmlNode xmlNode in lemmaLvl)
             {
                 XmlNode lNode = xmlNode.FirstChild; // Уровень l
                 XmlNode gNode = lNode.FirstChild;  // Уровень g
-                XmlNode fNode = xmlNode.ChildNodes[1]; // f одуровень
+                XmlNode fNode = xmlNode.ChildNodes[1]; // f подуровень
 
                 string str = gNode.SelectSingleNode("@v").Value;  // Значение "INFN"
                 string value = lNode.SelectSingleNode("@t").Value; // лексема глагола
@@ -71,32 +70,53 @@ namespace DictationaryParser
                 OpcorporaWord opcorporaWord = new OpcorporaWord();
                 opcorporaWord.AditionalWords = new List<string>();
 
-                //string[] partOfSpeechSTR = Enum.GetNames(typeof (PartOfSpeech));
-
-                //foreach (var pos in partOfSpeechSTR)
-                //{
-                //    partOfSpeeches.Add(pos);
-                //}
-
                 if (str != null)
                 {
-                    if (MainWindow.activeTypes.Contains(str) == true)
+                    if (str == "INFN" && previousWasVerb == true)
                     {
                         foreach (XmlNode chilnode in xmlNode.ChildNodes)
                         {
                             string aditionalWord = chilnode.SelectSingleNode("@t").Value;
-                            opcorporaWord.AditionalWords.Add(aditionalWord);
+                            if (!opcorporaWord.AditionalWords.Contains(aditionalWord))
+                            {
+                                opcorporaWord.AditionalWords.Add(aditionalWord);
+                            }
+                            
                         }
+                        
+                        opcorporaWord.Lexeme = previousVerbLexeme;
+                        opcorporaWord.PartOfSpeech = "VERB";
 
-                        opcorporaWord.Lexeme = value;
-                        opcorporaWord.PartOfSpeech = str;
-
-                        //if (OpcorporaWords.Find(x => x.Lexeme == opcorporaWord.Lexeme) == null)
-                        //{
-
-                        //}
+                        previousWasVerb = false;
+                        previousVerbLexeme = "";
 
                         OpcorporaWords.Add(opcorporaWord);
+                    }
+
+                    if (MainWindow.activeTypes.Contains(str) == true)
+                    {
+                        if (str == "VERB")
+                        {
+                            previousVerbLexeme = value;
+                            previousWasVerb = true;
+                        }
+                        else
+                        {
+                            foreach (XmlNode chilnode in xmlNode.ChildNodes)
+                            {
+                                string aditionalWord = chilnode.SelectSingleNode("@t").Value;
+                                if (!opcorporaWord.AditionalWords.Contains(aditionalWord))
+                                {
+                                    opcorporaWord.AditionalWords.Add(aditionalWord);
+                                }
+                            }
+
+                            opcorporaWord.Lexeme = value;
+                            opcorporaWord.PartOfSpeech = str;
+
+                            OpcorporaWords.Add(opcorporaWord);
+                        }
+                       
                     }
 
                 }
@@ -157,9 +177,17 @@ namespace DictationaryParser
                     {
                         OpcorporaWord newWord = new OpcorporaWord();
 
-                        newWord.Lexeme = sWord;
-                        newWord.PartOfSpeech = oWord.PartOfSpeech;
-
+                        if (oWord.PartOfSpeech == "VERB")
+                        {
+                            newWord.Lexeme = oWord.AditionalWords[0];
+                            newWord.PartOfSpeech = oWord.PartOfSpeech;
+                        }
+                        else
+                        {
+                            newWord.Lexeme = sWord;
+                            newWord.PartOfSpeech = oWord.PartOfSpeech;
+                        }
+                        
                         if (words.Exists(x => x.Lexeme == oWord.Lexeme) == false)
                         {
                             if (newWord.Lexeme.Length > 2)
@@ -169,7 +197,7 @@ namespace DictationaryParser
                         }
                     }
                     else
-                    { // Ошибка в этом обработчике!!!
+                    { 
                         foreach (var aWord in oWord.AditionalWords)
                         {
                             if (aWord == sWord)
@@ -179,8 +207,17 @@ namespace DictationaryParser
                                     if (oWord.Lexeme.Length > 2)
                                     {
                                         OpcorporaWord newWord = new OpcorporaWord();
-                                        newWord.Lexeme = oWord.Lexeme;
-                                        newWord.PartOfSpeech = oWord.PartOfSpeech;
+
+                                        if (oWord.PartOfSpeech == "VERB")
+                                        {
+                                            newWord.Lexeme = aWord; //oWord.Lexeme;
+                                            newWord.PartOfSpeech = oWord.PartOfSpeech;
+                                        }
+                                        else
+                                        {
+                                            newWord.Lexeme = oWord.AditionalWords[0];
+                                            newWord.PartOfSpeech = oWord.PartOfSpeech;
+                                        }
 
                                         words.Add(newWord);
                                     }

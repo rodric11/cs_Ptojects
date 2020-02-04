@@ -35,13 +35,13 @@
         <CheckBox Name="GRND" Content="Деепричастие" Grid.Row="8" Grid.Column="0"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
         
         <CheckBox Name="NUMR" Content="Числительное" Grid.Row="0" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="ADVB" Content="Числительное" Grid.Row="1" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="NPRD" Content="Числительное" Grid.Row="2" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="PRED" Content="Числительное" Grid.Row="3" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="PREP" Content="Числительное" Grid.Row="4" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="CONJ" Content="Числительное" Grid.Row="5" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="PRCL" Content="Числительное" Grid.Row="6" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
-        <CheckBox Name="INTJ" Content="Числительное" Grid.Row="7" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="ADVB" Content="Наречие" Grid.Row="1" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="NPRO" Content="Местоимение-сущ." Grid.Row="2" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PRED" Content="Предикатив" Grid.Row="3" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PREP" Content="Предлог" Grid.Row="4" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="CONJ" Content="Союз" Grid.Row="5" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="PRCL" Content="Частица" Grid.Row="6" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
+        <CheckBox Name="INTJ" Content="Междометие" Grid.Row="7" Grid.Column="1"   FontSize="16" Margin="10 10" VerticalContentAlignment="Center" ></CheckBox>
 
         <Grid Grid.Row="9" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
