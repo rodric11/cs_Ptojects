@@ -1,7 +1,7 @@
 ﻿
-FN:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\App.xaml;;
-FN:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\AdditionalWindows\ExcelCreatorWindow.xaml;;
-FN:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\AdditionalWindows\Expectation.xaml;;
-FN:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\MainWindow.xaml;;
-FN:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\AdditionalWindows\PartOfSpeechChange.xaml;;
+FL:\DictationaryParser\DictationaryParser\App.xaml;;
+FL:\DictationaryParser\DictationaryParser\AdditionalWindows\ExcelCreatorWindow.xaml;;
+FL:\DictationaryParser\DictationaryParser\AdditionalWindows\Expectation.xaml;;
+FL:\DictationaryParser\DictationaryParser\MainWindow.xaml;;
+FL:\DictationaryParser\DictationaryParser\AdditionalWindows\PartOfSpeechChange.xaml;;
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,7 @@ namespace DictationaryParser.AdditionalWindows
         {
             if (ExcelNameTextBox.Text != "" && ExcelSheetTextBox.Text != "")
             {
-                MainWindow.currentFile = "N:\\C#\\CBS\\Projects etc\\DictationaryParser\\DictationaryParser\\DictationaryParser\\Documentation\\" + ExcelNameTextBox.Text;
+                MainWindow.currentFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\DictationaryParser\\Documentation\\" + ExcelNameTextBox.Text;
                 MainWindow.currentSheet = ExcelSheetTextBox.Text;
                 if (ExcelNameTextBox.Text.EndsWith(".xlsx") == false)
                 {

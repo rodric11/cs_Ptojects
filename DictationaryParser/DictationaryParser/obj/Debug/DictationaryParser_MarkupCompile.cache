@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\
+L:\DictationaryParser\DictationaryParser\obj\Debug\
 DictationaryParser
 none
 false
 DEBUG;TRACE
-N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\App.xaml
+L:\DictationaryParser\DictationaryParser\App.xaml
 4-2045053108
 
 11812326215
-14859699772
+14-1594077706
 AdditionalWindows\ExcelCreatorWindow.xaml;AdditionalWindows\Expectation.xaml;MainWindow.xaml;AdditionalWindows\PartOfSpeechChange.xaml;
 
 False

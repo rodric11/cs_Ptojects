@@ -27,7 +27,7 @@ namespace DictationaryParser
 
         public List<string> wordslist;
 
-        public static string currentFile = "N:\\C#\\CBS\\Projects etc\\DictationaryParser\\DictationaryParser\\DictationaryParser\\Documentation\\Words.xlsx";
+        public static string currentFile = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\DictationaryParser\\Documentation\\Words.xlsx";
         public static string currentSheet = "";
 
 

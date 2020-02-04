@@ -19,3 +19,24 @@ N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\ExcelCreatorWindow.baml
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\Expectation.baml
 N:\C#\CBS\Projects etc\DictationaryParser\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\PartOfSpeechChange.baml
+L:\DictationaryParser\DictationaryParser\bin\Debug\DictationaryParser.exe.config
+L:\DictationaryParser\DictationaryParser\bin\Debug\DictationaryParser.exe
+L:\DictationaryParser\DictationaryParser\bin\Debug\DictationaryParser.pdb
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.csprojAssemblyReference.cache
+L:\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\ExcelCreatorWindow.g.cs
+L:\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\Expectation.g.cs
+L:\DictationaryParser\DictationaryParser\obj\Debug\MainWindow.g.cs
+L:\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\PartOfSpeechChange.g.cs
+L:\DictationaryParser\DictationaryParser\obj\Debug\App.g.cs
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser_MarkupCompile.cache
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser_MarkupCompile.lref
+L:\DictationaryParser\DictationaryParser\obj\Debug\App.baml
+L:\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\ExcelCreatorWindow.baml
+L:\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\Expectation.baml
+L:\DictationaryParser\DictationaryParser\obj\Debug\MainWindow.baml
+L:\DictationaryParser\DictationaryParser\obj\Debug\AdditionalWindows\PartOfSpeechChange.baml
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.g.resources
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.Properties.Resources.resources
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.csproj.GenerateResource.cache
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.exe
+L:\DictationaryParser\DictationaryParser\obj\Debug\DictationaryParser.pdb
