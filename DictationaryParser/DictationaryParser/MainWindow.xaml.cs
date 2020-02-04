@@ -259,10 +259,10 @@ namespace DictationaryParser
                 DictationParser.CreateNewExcelFile(currentSheet, currentFile);
             }
 
-            currentFile = Path.GetFileName(currentFile);
+            string fileName = Path.GetFileName(currentFile);
 
             IsLoadedFileLabel.Foreground = Brushes.Green;
-            IsLoadedFileLabel.Content = currentFile;
+            IsLoadedFileLabel.Content = fileName;
 
         }
 
