@@ -8,7 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using static DictationaryParser.DictationParser;
+//using static DictationaryParser.DictationParser;
 
 namespace DictationaryParser
 {
@@ -89,7 +89,8 @@ namespace DictationaryParser
 
             ActivatedTypesCHeck();
 
-            if (DictStrings != null && DictationRichBox.Document != null)
+
+            if (DictStrings != null && DictStrings.Count != 0 && DictationRichBox.Document != null)
             {
                 TypesChengeButton.IsEnabled = false;
                 LoadDictationButton.IsEnabled = false;
@@ -109,10 +110,57 @@ namespace DictationaryParser
 
                 
             }
+            else if (DictStrings == null)
+            {
+                FlowDocument flowDocument = new FlowDocument();
+                Paragraph paragraph = new Paragraph();
+
+                flowDocument = DictationRichBox.Document;
+
+                DictStrings = new List<string>();
+
+               
+                string mystring = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd).Text;
+                char[] mystringChar = mystring.ToCharArray();
+                string newstring = "";
+
+                for (int i = 0; i < mystringChar.Length; i++)
+                {
+                    if (mystringChar[i] != '\n' && mystringChar[i] != '\r' && mystringChar[i] != '\\')
+                    {
+                        newstring += mystringChar[i];
+                    }
+                    else
+                    {
+                        i++;
+                        if (newstring != "")
+                        {
+                            DictStrings.Add(newstring);
+                        }
+                        newstring = "";
+                    }
+                }
+                TypesChengeButton.IsEnabled = false;
+                LoadDictationButton.IsEnabled = false;
+                ParseDictationButton.IsEnabled = false;
+                WriteWordsToExcelButton.IsEnabled = false;
+
+                Thread thread = new Thread(new ThreadStart(FindExistingWordsInOpcorpora));
+                thread.Name = "ProcessingThread";
+                thread.Start();
+
+                MessageBox.Show("Выполняется обработка слов, подождте...", "IDLE", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+
+                BarLabel.Foreground = Brushes.Red;
+                BarLabel.Content = "Идет обработка...";
+            }
             else
             {
-                MessageBox.Show("Нет данных для преобразования!");
+                {
+                    MessageBox.Show("Нет данных для преобразования!");
+                }
             }
+            
         }
 
         public static void ActivatedTypesCHeck()
@@ -131,10 +179,12 @@ namespace DictationaryParser
         {
             
 
-            partOfSpeechChange.ShowDialog();
+            bool? check = partOfSpeechChange.ShowDialog();
 
-            LoadDictationButton.IsEnabled = true;
-            ParseDictationButton.IsEnabled = true;
+                LoadDictationButton.IsEnabled = true;
+                ParseDictationButton.IsEnabled = true;
+          
+           
         }
 
         private void WriteWordsToExcelButton_Click(object sender, RoutedEventArgs e)
@@ -159,11 +209,12 @@ namespace DictationaryParser
 
         private void FindExistingWordsInOpcorpora()
         {
-            GetOpcorporaWords();
 
-            wordslist = GetWordsFromDictationary(DictStrings);
+            DictationParser.GetOpcorporaWords();
 
-            PreparedForExcelAddingList = MatchWordsFromOpcorporaAndDictationary(wordslist);
+            wordslist = DictationParser.GetWordsFromDictationary(DictStrings);
+
+            PreparedForExcelAddingList = DictationParser.MatchWordsFromOpcorporaAndDictationary(wordslist);
 
             Dispatcher.InvokeAsync(() =>
             {
@@ -182,7 +233,7 @@ namespace DictationaryParser
 
         private void WriteToExcel()
         {
-            int counter = AddNewWordsToExcel(PreparedForExcelAddingList, currentFile);
+            int counter = DictationParser.AddNewWordsToExcel(PreparedForExcelAddingList, currentFile);
 
             Dispatcher.InvokeAsync(() =>
             {
@@ -205,7 +256,7 @@ namespace DictationaryParser
 
             if (currentFile != "" && currentSheet != "")
             {
-                CreateNewExcelFile(currentSheet, currentFile);
+                DictationParser.CreateNewExcelFile(currentSheet, currentFile);
             }
 
             currentFile = Path.GetFileName(currentFile);

@@ -15,7 +15,7 @@ namespace DictationaryParser
 
     internal class DictationParser
     {
-        public static Expectation idleWIndow = new Expectation();
+        //public static Expectation idleWIndow = new Expectation();
 
         public static List<string> partOfSpeeches = new List<string>();
         public static List<OpcorporaWord> OpcorporaWords { get; set; }

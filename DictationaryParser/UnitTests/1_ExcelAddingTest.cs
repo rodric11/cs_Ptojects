@@ -27,7 +27,7 @@ namespace UnitTests
             words.Add(word1);
             words.Add(word2);
 
-            DictationParser.AddNewWordsToExcel(words);
+            DictationParser.AddNewWordsToExcel(words, "asdasd");
 
         }
     }
