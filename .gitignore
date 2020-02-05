@@ -1,0 +1,6 @@
+# Ignore NuGet and additional packages
+packages/
+
+# Debug files
+DictationaryParser/bin/Debug/
+DictationaryParser/obj/Debug/
